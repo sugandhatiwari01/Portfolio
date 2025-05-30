@@ -34,3 +34,16 @@ Navigate Sections: Use the top navigation bar to explore Home, About, Work, and 
 Skills Carousel: Click skills in the About section to view descriptions and proficiency levels.
 Projects: Click project cards in the Work section to see details and videos.
 Contact: Use social links (GitHub, LinkedIn, Instagram, Email) to connect.
+
+
+# ![Screenshot 2025-04-07 191450](https://github.com/user-attachments/assets/87f864a0-e34a-4dcf-9713-b5706fe0280f)
+
+# ![Screenshot 2025-04-07 191514](https://github.com/user-attachments/assets/457292aa-64ad-4c46-b732-38c31c58e192)
+
+# ![image](https://github.com/user-attachments/assets/8e4bcb99-fb72-4a30-b0ae-67d04a1253a6)
+
+# ![image](https://github.com/user-attachments/assets/58b12fa9-8bed-4274-b32b-de154b7134d2)
+
+
+
+
