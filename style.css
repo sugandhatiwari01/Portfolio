@@ -77,6 +77,9 @@ body.card-active::before {
     z-index: 10000;
     transition: opacity 0.8s ease-out;
     opacity: 1; /* Explicit initial state */
+  
+    min-height: -webkit-fill-available; /* Fallback for iOS Safari */
+
 }
 .loader.hidden {
     opacity: 0;
@@ -879,8 +882,12 @@ body.scrolling ::-webkit-scrollbar-thumb {
         width: clamp(120px, 35vw, 200px);
         height: clamp(120px, 35vw, 200px);
     }
-    .work-grid {
-        grid-template-columns: 1fr;
+ .media-container {
+        min-height: 25%; /* Slightly less on mobile to fit content */
+        width: 90%; /* Wider to use more space */
+    }
+    .work-item.active .media-container {
+        max-height: 55%;
     }
 }
 @media (min-width: 481px) and (max-width: 768px) {
