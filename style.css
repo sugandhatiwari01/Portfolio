@@ -423,7 +423,9 @@ body.scrolling ::-webkit-scrollbar-thumb {
     height: calc(100% - 80px);
     padding: 20px;
     box-sizing: border-box;
+    overflow: visible; /* Prevent clipping */
 }
+
 
 .content-section {
     display: none;
@@ -521,13 +523,13 @@ body.scrolling ::-webkit-scrollbar-thumb {
 
 .skills-list {
     display: flex;
-    animation: carousel 15s linear infinite;
+    animation: carousel 60s linear infinite;
     white-space: nowrap;
     width: max-content;
     margin-top: 10px;
     position: relative; /* For absolute positioning of popups */
     cursor: pointer; /* Indicate clickability */
-   
+   white-space: nowrap;
 }
 .skills-list.paused {
     animation-play-state: paused;
@@ -541,8 +543,9 @@ body.scrolling ::-webkit-scrollbar-thumb {
     font-size: 1.2rem;
     margin: 0 15px;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
-    display: flex;
+    display: inline-flex;
     align-items: center;
+    flex-shrink: 0;
 }
 
 .skill-item i {
@@ -557,7 +560,7 @@ body.scrolling ::-webkit-scrollbar-thumb {
 
 @keyframes carousel {
     0% { transform: translateX(0); }
-    100% { transform: translateX(-50%); }
+    100% { transform: translateX(-100%); }
 }
 
 @media (max-width: 480px) {

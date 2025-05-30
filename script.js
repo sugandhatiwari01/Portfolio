@@ -28,6 +28,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const optionsContainer = document.querySelector('.options-container');
     const skillsList = document.querySelector('.skills-list');
 
+const skillItems = skillsList.querySelectorAll('.skill-item');
+skillItems.forEach(item => {
+    const clone = item.cloneNode(true);
+    skillsList.appendChild(clone); // Append clones for infinite loop
+});
+
     optionSquares.forEach(square => {
         square.addEventListener('click', () => {
             if (clickSound) {
@@ -288,14 +294,98 @@ document.addEventListener('DOMContentLoaded', () => {
     let activePopup = null;
 
     const skillData = {
-        html: { desc: 'Proficient in semantic markup and accessibility.', proficiency: 90 },
-        css: { desc: 'Expert in responsive design and animations.', proficiency: 85 },
-        javascript: { desc: 'Skilled in ES6+ and dynamic interactions.', proficiency: 80 },
-        react: { desc: 'Building reusable components with React.', proficiency: 75 },
-        nodejs: { desc: 'Server-side development with Node.js.', proficiency: 70 },
-        mongodb: { desc: 'Database management with MongoDB.', proficiency: 65 },
-        figma: { desc: 'UI/UX design with Figma.', proficiency: 80 }
-    };
+       
+  html: {
+    desc: 'Comfortable writing clean, semantic HTML with accessibility in mind.',
+    proficiency: 88,
+  },
+  css: {
+    desc: 'Good with responsive layouts, flex/grid and some neat animations.',
+    proficiency: 85,
+  },
+  javascript: {
+    desc: 'Confident with core JS and DOM . Love solving UI logic.',
+    proficiency: 82,
+  },
+  react: {
+    desc: 'Can build smooth interfaces with reusable components and hooks.',
+    proficiency: 76,
+  },
+  nodejs: {
+    desc: 'Have built APIs using Express and Node, know the flow well.',
+    proficiency: 72,
+  },
+  mongodb: {
+    desc: 'Used MongoDB for several projects, comfortable with queries and schema design.',
+    proficiency: 71,
+  },
+  express: {
+    desc: 'Familiar with routing, middleware, and building APIs using Express.',
+    proficiency: 71,
+  },
+  next: {
+    desc: 'Learning Next.js for SSR and routing. Have done a few experiments.',
+    proficiency: 68,
+  },
+  c: {
+    desc: 'Learned in academics. Good with basics and pointers, used in DSA.',
+    proficiency: 72,
+  },
+  cpp: {
+    desc: 'Used for solving DSA problems and building small projects.',
+    proficiency: 78,
+  },
+  java: {
+    desc: 'Used in academics and for OOP concepts. Comfortable with syntax and logic.',
+    proficiency: 77,
+  },
+  python: {
+    desc: 'Written a few scripts, know the basics and syntax well.',
+    proficiency: 70,
+  },
+  php: {
+    desc: 'Used in a full-stack project. Comfortable with backend logic and forms.',
+    proficiency: 72,
+  },
+  sql: {
+    desc: 'Can write queries, joins, and manage relational databases.',
+    proficiency: 78,
+  },
+  plsql: {
+    desc: 'Used PL/SQL blocks and cursors in Oracle. Academic exposure.',
+    proficiency: 76,
+  },
+  firebase: {
+    desc: 'Used Firebase Auth and Realtime DB in personal projects.',
+    proficiency: 70,
+  },
+  figma: {
+    desc: 'Design UI and create wireframes easily. Use it for project plans.',
+    proficiency: 80,
+  },
+  canva: {
+    desc: 'Use Canva for posters and quick UI visuals. Simple and handy tool.',
+    proficiency: 80,
+  },
+  vscode: {
+    desc: 'Main code editor. Customized and familiar with it.',
+    proficiency: 85,
+  },
+  git: {
+    desc: 'Know branching, commits, pushing projects – daily driver.',
+    proficiency: 80,
+  },
+  tailwind: {
+        desc: 'Experienced in creating sleek UI designs with Tailwind CSS.',
+        proficiency: 78,
+    },
+    bootstrap: {
+        desc: 'Skilled in building responsive layouts with Bootstrap’s CSS framework.',
+        proficiency: 82,
+    }
+};
+
+    
 
     skillsLists.addEventListener('click', (e) => {
         const skillItem = e.target.closest('.skill-item');
@@ -342,7 +432,7 @@ document.addEventListener('DOMContentLoaded', () => {
             progressFill.style.width = `${data.proficiency}%`;
         });
 
-        setTimeout(() => closePopup(), 3000);
+        setTimeout(() => closePopup(), 5000);
     });
 
     document.addEventListener('click', (e) => {
