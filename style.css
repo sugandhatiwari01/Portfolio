@@ -77,7 +77,10 @@ body.card-active::before {
     z-index: 10000;
     transition: opacity 0.8s ease-out;
     opacity: 1; /* Explicit initial state */
+<<<<<<< HEAD
   
+=======
+>>>>>>> abd438171d3695763a5143abef0037972a3c59af
     min-height: -webkit-fill-available; /* Fallback for iOS Safari */
 
 }
