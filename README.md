@@ -9,6 +9,7 @@ Personal Portfolio is a dynamic, responsive portfolio website built with HTML, C
 - **Project Showcase**: Interactive cards for projects like Convo and Jazzify with video previews and details.
 - **Responsive Design**: Optimized for mobile and desktop devices.
 - **Loader Animation**: Code rain effect during page load for a cinematic experience.
+ - **Experience Timeline**: New Experience section with timeline-styled entries and expandable details.
 
 ## Tech Stack
 - **HTML**: Semantic structure and accessibility.

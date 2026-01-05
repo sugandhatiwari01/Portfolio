@@ -1,259 +1,1380 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sugandha Tiwari - Portfolio</title>
-    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
-        integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="./style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sugandha Tiwari | Software Engineer & Full-Stack Developer</title>
+  <meta name="description" content="Sugandha Tiwari – Full-stack developer specializing in web development, UI/UX design, and seamless digital experiences.">
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  
+  <!-- GSAP -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  
+  <!-- Lenis Smooth Scroll -->
+  <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
+
+  <!-- Font Awesome for social icons -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/js/all.min.js"></script>
+
+  <style>
+    /* ========================================
+       CSS VARIABLES / DESIGN SYSTEM
+    ======================================== */
+    :root {
+      --background: hsl(0, 0%, 4%);
+      --foreground: hsl(45, 10%, 92%);
+      --card: hsl(0, 0%, 7%);
+      --card-foreground: hsl(45, 10%, 92%);
+      --primary: hsl(35, 100%, 60%);
+      --primary-foreground: hsl(0, 0%, 4%);
+      --secondary: hsl(0, 0%, 12%);
+      --muted: hsl(0, 0%, 14%);
+      --muted-foreground: hsl(0, 0%, 55%);
+      --accent: hsl(35, 80%, 50%);
+      --border: hsl(0, 0%, 16%);
+      --glass: hsla(0, 0%, 100%, 0.03);
+      --glass-border: hsla(0, 0%, 100%, 0.08);
+      --glow: hsla(35, 100%, 60%, 0.15);
+      --radius: 0.75rem;
+    }
+
+    /* ========================================
+       RESET & BASE (unchanged)
+    ======================================== */
+    *, *::before, *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: auto;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--background);
+      color: var(--foreground);
+      line-height: 1.6;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      line-height: 1;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+      transition: color 0.3s ease;
+    }
+
+    img, video {
+      max-width: 100%;
+      display: block;
+    }
+
+    /* ========================================
+       UTILITY CLASSES (unchanged)
+    ======================================== */
+    .section-padding {
+      padding-left: 1.5rem;
+      padding-right: 1.5rem;
+    }
+
+    @media (min-width: 768px) {
+      .section-padding {
+        padding-left: 3rem;
+        padding-right: 3rem;
+      }
+    }
+
+    @media (min-width: 1024px) {
+      .section-padding {
+        padding-left: 6rem;
+        padding-right: 6rem;
+      }
+    }
+
+    .max-container {
+      max-width: 100rem;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .glass-card {
+      background: var(--glass);
+      border: 1px solid var(--glass-border);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+
+    .accent-gradient {
+      background: linear-gradient(135deg, var(--primary) 0%, hsl(35, 100%, 70%) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .text-muted {
+      color: var(--muted-foreground);
+    }
+
+    .text-primary {
+      color: var(--primary);
+    }
+
+    .uppercase {
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    .perspective-container {
+      perspective: 1000px;
+      transform-style: preserve-3d;
+    }
+
+    /* ========================================
+       NOISE OVERLAY (unchanged)
+    ======================================== */
+    .noise-overlay::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0.03;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    }
+
+    /* ========================================
+       NAVIGATION (unchanged)
+    ======================================== */
+    .nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      padding-top: 1.5rem;
+      padding-bottom: 1.5rem;
+      transition: background-color 0.5s ease, backdrop-filter 0.5s ease;
+    }
+
+    .nav.scrolled {
+      background-color: hsla(0, 0%, 4%, 0.8);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+    }
+
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .nav-logo {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.25rem;
+      font-weight: 700;
+    }
+
+    .nav-logo:hover {
+      color: var(--primary);
+    }
+
+    .nav-links {
+      display: none;
+      align-items: center;
+      gap: 2rem;
+    }
+
+    @media (min-width: 768px) {
+      .nav-links {
+        display: flex;
+      }
+    }
+
+    .nav-links a {
+      font-size: 0.875rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--muted-foreground);
+    }
+
+    .nav-links a:hover {
+      color: var(--foreground);
+    }
+
+    .nav-cta {
+      display: none;
+      padding: 0.625rem 1.25rem;
+      border: 1px solid var(--border);
+      border-radius: 9999px;
+      font-size: 0.875rem;
+      transition: all 0.3s ease;
+    }
+
+    @media (min-width: 768px) {
+      .nav-cta {
+        display: inline-flex;
+      }
+    }
+
+    .nav-cta:hover {
+      background-color: var(--foreground);
+      color: var(--background);
+    }
+
+    .nav-mobile-btn {
+      display: flex;
+      flex-direction: column;
+      gap: 0.375rem;
+      width: 2.5rem;
+      height: 2.5rem;
+      align-items: center;
+      justify-content: center;
+      background: none;
+      border: none;
+      cursor: pointer;
+    }
+
+    @media (min-width: 768px) {
+      .nav-mobile-btn {
+        display: none;
+      }
+    }
+
+    .nav-mobile-btn span {
+      width: 1.5rem;
+      height: 2px;
+      background-color: var(--foreground);
+    }
+
+    /* ========================================
+       HERO SECTION (unchanged structure)
+    ======================================== */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    .hero-bg-gradient-1 {
+      position: absolute;
+      top: 25%;
+      left: 25%;
+      width: 24rem;
+      height: 24rem;
+      background: hsla(35, 100%, 60%, 0.05);
+      border-radius: 50%;
+      filter: blur(120px);
+    }
+
+    .hero-bg-gradient-2 {
+      position: absolute;
+      bottom: 25%;
+      right: 25%;
+      width: 20rem;
+      height: 20rem;
+      background: hsla(35, 80%, 50%, 0.05);
+      border-radius: 50%;
+      filter: blur(100px);
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 10;
+    }
+
+    .hero-label {
+      font-size: 0.875rem;
+      color: var(--muted-foreground);
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      margin-bottom: 1rem;
+    }
+
+    .hero-title {
+      font-size: clamp(3rem, 12vw, 7rem);
+        font-weight: 800;
+      line-height: 0.9;
+      letter-spacing: -0.03em;
+      overflow: hidden;
+      white-space: nowrap; /* keep name on a single line */
+    }
+
+    .hero-title .char {
+      display: inline-block;
+      transform-style: preserve-3d;
+    }
+
+    .hero-subtitle {
+      margin-top: 2rem;
+      font-size: 1.125rem;
+      color: var(--muted-foreground);
+      max-width: 36rem;
+      font-weight: 300;
+      line-height: 1.7;
+    }
+
+    @media (min-width: 768px) {
+      .hero-subtitle {
+        margin-top: 3rem;
+        font-size: 1.5rem;
+      }
+    }
+
+    
+    .scroll-indicator {
+      position: absolute;
+      bottom: 3rem;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .scroll-indicator span {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--muted-foreground);
+    }
+
+    .scroll-line-container {
+      width: 1px;
+      height: 4rem;
+      background-color: var(--border);
+      overflow: hidden;
+    }
+
+    .scroll-line {
+      width: 100%;
+      height: 100%;
+      background-color: var(--primary);
+      transform-origin: top;
+      transform: scaleY(0);
+    }
+
+    /* ========================================
+       PROJECTS SECTION (unchanged)
+    ======================================== */
+    .projects {
+      padding-top: 8rem;
+      padding-bottom: 8rem;
+    }
+
+    @media (min-width: 768px) {
+      .projects {
+        padding-top: 12rem;
+        padding-bottom: 12rem;
+      }
+    }
+
+    .section-header {
+      margin-bottom: 5rem;
+    }
+
+    @media (min-width: 768px) {
+      .section-header {
+        margin-bottom: 8rem;
+      }
+    }
+
+    .section-label {
+      font-size: 0.875rem;
+      color: var(--primary);
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+    }
+
+    .section-title {
+      font-size: clamp(2rem, 6vw, 5rem);
+      line-height: 1;
+      letter-spacing: -0.02em;
+      margin-top: 1rem;
+    }
+
+    .projects-grid {
+      max-width: 72rem;
+      margin-left: auto;
+      margin-right: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 6rem;
+    }
+
+    @media (min-width: 768px) {
+      .projects-grid {
+        gap: 10rem;
+      }
+    }
+
+    .project-card {
+      position: relative;
+      transform-style: preserve-3d;
+    }
+
+    .project-card.align-right {
+      margin-left: auto;
+    }
+
+    .project-card.align-left {
+      margin-right: auto;
+    }
+
+    .project-glow {
+      position: absolute;
+      inset: -1rem;
+      background: linear-gradient(to right, hsla(35, 100%, 60%, 0.2), hsla(35, 80%, 50%, 0.1), transparent);
+      border-radius: 1rem;
+      filter: blur(2rem);
+      opacity: 0;
+      transition: opacity 0.7s ease;
+    }
+
+    .project-card:hover .project-glow {
+      opacity: 1;
+    }
+
+    .project-inner {
+      position: relative;
+    }
+
+    .project-video-container {
+      position: relative;
+      aspect-ratio: 16 / 9;
+      overflow: hidden;
+      border-radius: var(--radius) var(--radius) 0 0;
+    }
+
+    .project-video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      clip-path: inset(0 100% 0 0);
+    }
+
+    .project-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, var(--background), transparent, transparent);
+      opacity: 0.6;
+    }
+
+    .project-content {
+      padding: 1.5rem;
+    }
+
+    @media (min-width: 768px) {
+      .project-content {
+        padding: 2rem;
+      }
+    }
+
+    .project-category {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--primary);
+    }
+
+    @media (min-width: 768px) {
+      .project-category {
+        font-size: 0.875rem;
+      }
+    }
+
+    .project-title {
+      margin-top: 0.75rem;
+      font-size: 1.5rem;
+    }
+
+    @media (min-width: 768px) {
+      .project-title {
+        font-size: 1.875rem;
+      }
+    }
+
+    .project-links {
+      display: flex;
+      gap: 1.5rem;
+      margin-top: 1rem;
+    }
+
+    .project-link {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--muted-foreground);
+      font-size: 0.875rem;
+      transition: color 0.3s ease;
+    }
+
+    .project-card:hover .project-link {
+      color: var(--primary);
+    }
+
+    .project-link svg {
+      width: 1rem;
+      height: 1rem;
+      transition: transform 0.3s ease;
+    }
+
+    .project-card:hover .project-link svg {
+      transform: translateX(0.5rem);
+    }
+
+    /* ========================================
+       ABOUT, EXPERIENCE & CONTACT
+    ======================================== */
+
+    /* About (small tweaks) */
+    .about {
+      padding-top: 6rem;
+      padding-bottom: 6rem;
+    }
+
+    .about-grid { display: grid; grid-template-columns: 1fr; gap: 2rem; }
+    @media (min-width: 900px) { .about-grid { grid-template-columns: 2fr 1fr; gap: 2.5rem; } }
+    .about-text { font-size: clamp(1.15rem, 2.2vw, 1.6rem); line-height: 1.8; }
+    @media (min-width: 1024px) { .about-text { font-size: 1.9rem; } }
+
+    /* Skills visual tweaks when shown beside About */
+    .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 1rem; }
+    .skill-item { padding: 1rem 1.2rem; text-align: center; font-size: 0.95rem; border-radius: 10px; background: var(--glass); border: 1px solid var(--glass-border); display:flex; align-items:center; justify-content:center; gap:0.6rem; }
+    .skill-item .skill-icon { font-size: 1.1rem; width: 1.3rem; display: inline-grid; place-items: center; }
+    .skills-title { margin: 0 0 0.75rem 0; font-size: 1rem; color: var(--muted-foreground); }
+
+    .stats-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin-top: 1.25rem; }
+    @media (min-width: 900px) { .stats-grid { grid-template-columns: repeat(4, 1fr); } }
+
+    /* Experience / Timeline */
+    .experience { padding-top: 6rem; padding-bottom: 6rem; }
+    .timeline { display: grid; gap: 1.25rem; max-width: 72rem; margin: 0 auto; }
+    .timeline-item { display: grid; grid-template-columns: 44px 1fr; gap: 1rem; align-items: start; padding: 1rem; border-radius: 0.75rem; border: 1px solid var(--glass-border); }
+    .timeline-dot { width: 36px; height: 36px; border-radius: 999px; background: linear-gradient(135deg,var(--primary), hsl(35,100%,70%)); box-shadow: 0 6px 20px var(--glow); margin-top: 6px; }
+    .timeline-head { display:flex; justify-content:space-between; align-items:baseline; gap: 12px; }
+    .timeline-head h3 { margin: 0; font-size: 1.05rem; }
+    .timeline-meta { margin-top: 0.75rem; color: var(--muted-foreground); font-size: 0.875rem; }
+    .timeline-item:hover { transform: translateY(-6px); box-shadow: 0 18px 40px rgba(0,0,0,0.5); }
+    .timeline-item p { margin: 0.65rem 0 0 0; color: var(--muted-foreground); max-height: 3.6em; overflow: hidden; transition: max-height 0.35s ease; }
+    .timeline-item.expanded { box-shadow: 0 30px 80px rgba(0,0,0,0.6); transform: translateY(-8px); }
+    .timeline-item.expanded p { max-height: 1000px; }
+    .timeline-item.expanded .timeline-meta { color: var(--foreground); }
+
+    @media (min-width: 900px) {
+      .timeline { gap: 1.75rem; }
+      .timeline-item { padding: 1.25rem; }
+    }
+
+   /* Contact section: improved proportioning and responsive layout */
+.contact {
+  padding-top: 8rem;
+  padding-bottom: 10rem; /* More breathing room */
+}
+
+@media (min-width: 768px) {
+  .contact {
+    padding-top: 12rem;
+    padding-bottom: 14rem;
+  }
+}
+
+.contact-content {
+  max-width: 56rem;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  position: relative;
+  z-index: 10;
+}
+
+.contact-description {
+  max-width: 62ch;
+  margin: 2rem auto 0;
+  font-size: 1.125rem;
+  color: var(--muted-foreground);
+  line-height: 1.7;
+}
+
+@media (min-width: 768px) {
+  .contact-description {
+    font-size: 1.25rem;
+  }
+}
+
+/* Smaller, glowing Contact Button */
+.contact-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-top: 3rem;
+  padding: 0.9rem 2rem;
+  background-color: var(--primary);
+  color: var(--primary-foreground);
+  border-radius: 9999px;
+  font-family: 'Syne', sans-serif;
+  font-size: 1.05rem;
+  font-weight: 600;
+  transition: all 0.4s ease;
+  box-shadow: 
+    0 0 40px var(--glow),
+    0 0 80px var(--glow),
+    0 0 120px hsla(35, 100%, 60%, 0.25);
+}
+
+.contact-btn:hover {
+  transform: translateY(-6px) scale(1.06);
+  box-shadow: 
+    0 0 60px var(--glow),
+    0 0 100px var(--glow),
+    0 0 160px hsla(35, 100%, 60%, 0.4);
+}
+
+/* Social Links */
+.social-links {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2.8rem;
+  margin-top: 4.5rem;
+  flex-wrap: wrap;
+}
+
+.social-links a {
+  font-size: 0.95rem;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  color: var(--muted-foreground);
+  padding: 0.5rem 0.8rem;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.social-links a i {
+  font-size: 1.3rem;
+  width: 1.3rem;
+  height: 1.3rem;
+  display: grid;
+  place-items: center;
+}
+
+.social-links a:hover {
+  color: var(--foreground);
+  transform: translateY(-6px);
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+}
+
+
+.hero-profile {
+      position: relative;
+      width: 280px;
+      height: 280px;
+      margin: 0 auto 2.5rem auto;
+      border-radius: 50%;
+      overflow: hidden;
+      transform-style: preserve-3d;
+      perspective: 1000px;
+      box-shadow: 
+        0 20px 60px rgba(0,0,0,0.8),
+        0 0 80px var(--glow);
+      opacity: 0;
+      transform: scale(0.8) translateZ(-100px);
+    }
+
+    @media (min-width: 768px) {
+      .hero-profile {
+        width: 320px;
+        height: 320px;
+        margin-bottom: 3rem;
+      }
+    }
+
+    @media (min-width: 1024px) {
+      .hero-profile {
+        width: 360px;
+        height: 360px;
+        position: absolute;
+        left: 8%;
+        top: 50%;
+        transform: translateY(-50%) scale(0.8) translateZ(-100px);
+        margin: 0;
+      }
+      .hero-text-content {
+        margin-left: auto;
+        max-width: 50%;
+        text-align: left;
+      }
+      .hero-subtitle {
+        max-width: 100%;
+      }
+    }
+
+    .hero-profile img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 50%;
+      border: 4px solid hsla(35, 100%, 60%, 0.3);
+    }
+
+    .hero-profile::after {
+      content: '';
+      position: absolute;
+      inset: -20px;
+      background: radial-gradient(circle, hsla(35, 100%, 60%, 0.2) 0%, transparent 70%);
+      border-radius: 50%;
+      filter: blur(40px);
+      opacity: 0.8;
+      pointer-events: none;
+    }
+
+    /* Update hero-content to flex on large screens */
+    @media (min-width: 1024px) {
+      .hero-content {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        position: relative;
+        height: 100%;
+      }
+    }
+  </style>
+
+  
 </head>
-
 <body>
-    <div class="loader">
-        <div class="code-rain">
-            <canvas id="rainCanvas"></canvas>
-            <div class="loader-text">Initializing...</div>
-        </div>
+
+  <!-- Navigation -->
+  <nav class="nav section-padding" id="nav">
+    <div class="nav-inner max-container">
+      <a href="#" class="nav-logo">Sugandha Tiwari</a>
+      
+      <div class="nav-links">
+        <a href="#work">Work</a>
+        <a href="#about">About</a>
+        <a href="#experience">Experience</a>
+        <a href="#contact">Contact</a>
+      </div>
+      
+      <a href="mailto:sugandhatiwari41@gmail.com" class="nav-cta">Let's Talk</a>
+      
+      <button class="nav-mobile-btn">
+        <span></span>
+        <span></span>
+      </button>
     </div>
+  </nav>
 
-    <div class="content-wrapper">
-        <!-- Navigation -->
-        <nav class="top-nav">
-            <div class="logo">Sugandha Tiwari</div>
-            <ul>
-                <li><a href="#home"><i class="fas fa-house"></i> Home</a></li>
-                <li><a href="#about"><i class="fas fa-user"></i> About</a></li>
-                <li><a href="#work"><i class="fas fa-briefcase"></i> Work</a></li>
-                <li><a href="#connect"><i class="fas fa-envelope"></i> Contact</a></li>
-            </ul>
-        </nav>
+  <!-- Hero Section -->
+<section class="hero section-padding noise-overlay" id="hero">
+    <div class="hero-bg">
+      <div class="hero-bg-gradient-1"></div>
+      <div class="hero-bg-gradient-2"></div>
+    </div>
+    
+    <div class="hero-content max-container">
+      <div class="hero-profile" data-tilt>
+        <img src="./component/img.jpg" alt="Sugandha Tiwari">
+      </div>
 
-        <!-- Hero Section -->
-        <section id="home">
-            <div class="hero-content">
-                <div class="hero-text">
-                    <h1>Hey! I’m <span id="typed-name"></span>, a Software Engineer</h1>
-                    <p>Specializing in full-stack web development, UI/UX design, and creating seamless digital
-                        experiences.</p>
-                    <br>
-                    <a href="./component/resume.pdf" class="resume-btn" target="_blank" download
-                        aria-label="Download Sugandha Tiwari's Resume">
-                        <i class="fas fa-file-download"></i> Download Resume
-                    </a>
-                </div>
-                <div class="hero-image">
-                    <img src="./component/img.jpg" alt="Sugandha Tiwari's Photo">
-                </div>
+      <div class="hero-text-content">
+<span class="hero-label">Hello I am</span>        
+        <p class="hero-title perspective-container" id="hero-title">
+          <!-- Characters inserted by JS -->
+        </p>
+        
+        <p class="hero-subtitle" id="hero-subtitle">
+          Specializing in full-stack web development, UI/UX design, and creating seamless digital experiences.
+        </p>
+      </div>
+    </div>
+    
+    <div class="scroll-indicator" id="scroll-indicator">
+      <span>Scroll</span>
+      <div class="scroll-line-container">
+        <div class="scroll-line" id="scroll-line"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Projects Section -->
+  <section class="projects section-padding" id="work">
+    <div class="max-container">
+      <div class="section-header" id="projects-header">
+        <span class="section-label">Selected Works</span>
+        <h2 class="section-title">
+          My<br>
+          <span class="accent-gradient">Projects</span>
+        </h2>
+      </div>
+      
+      <div class="projects-grid">
+        <!-- Project 1 - Personal Portfolio -->
+        <div class="project-card align-left glass-card" data-project>
+          <div class="project-glow"></div>
+          <div class="project-inner">
+            <div class="project-video-container">
+              <video class="project-video" autoplay muted loop playsinline>
+                <source src="./component/porfolio.mp4" type="video/mp4">
+              </video>
+              <div class="project-overlay"></div>
             </div>
-        </section>
-
-        <!-- About Section -->
-        <section id="about">
-            <div class="constellation-background"></div>
-            <h2>About Me</h2>
-            <div class="computer-display">
-                <div class="display-header">
-                    <i class="fas fa-laptop-code display-logo"></i>
-                    <span class="display-title">Sugandha’s System</span>
-                </div>
-                <div class="display-screen">
-                    <div class="options-container">
-                        <div class="option-square active" data-section="about">
-                            <i class="fas fa-user"></i>
-                            <span>About Me</span>
-                        </div>
-                        <div class="option-square" data-section="skills">
-                            <i class="fas fa-code"></i>
-                            <span>Skills</span>
-                        </div>
-                    </div>
-                    <div class="content-container">
-                        <div class="content-section active" id="about-content">
-                            <p class="display-text">
-                                I’m Sugandha Tiwari, a Computer Science undergrad passionate about crafting clean,
-                                interactive web experiences. I specialize in full-stack development with tech stacks
-                                like HTML, CSS, JavaScript, React, Node.js, and MongoDB. Beyond coding, I enjoy movies,
-                                books, and designing on Figma.
-                            </p>
-                        </div>
-                        <div class="content-section" id="skills-content">
-                            <div class="skills-carousel">
-                                <div class="skills-list">
-                           <!-- Frontend Development -->
-<span class="skill-item" data-skill="html"><i class="fab fa-html5"></i> HTML</span>
-<span class="skill-item" data-skill="css"><i class="fab fa-css3-alt"></i> CSS</span>
-<span class="skill-item" data-skill="javascript"><i class="fab fa-js"></i> JavaScript</span>
-<span class="skill-item" data-skill="bootstrap"><i class="fab fa-bootstrap"></i> Bootstrap</span>
-<span class="skill-item" data-skill="tailwind"><i class="fas fa-wind"></i> Tailwind</span>
-<span class="skill-item" data-skill="react"><i class="fab fa-react"></i> React</span>
-<span class="skill-item" data-skill="next"><i class="fas fa-forward"></i> Next.js</span>
-
-<!-- Backend Development -->
-<span class="skill-item" data-skill="nodejs"><i class="fab fa-node-js"></i> Node.js</span>
-<span class="skill-item" data-skill="express"><i class="fas fa-server"></i> Express.js</span>
-<span class="skill-item" data-skill="php"><i class="fab fa-php"></i> PHP</span>
-
-<!-- Programming Languages -->
-<span class="skill-item" data-skill="c"><i class="fas fa-copyright"></i> C</span>
-<span class="skill-item" data-skill="cpp"><i class="fas fa-cogs"></i> C++</span>
-<span class="skill-item" data-skill="java"><i class="fab fa-java"></i> Java</span>
-<span class="skill-item" data-skill="python"><i class="fab fa-python"></i> Python</span>
-
-<!-- Database -->
-<span class="skill-item" data-skill="mongodb"><i class="fas fa-database"></i> MongoDB</span>
-<span class="skill-item" data-skill="sql"><i class="fas fa-database"></i> SQL</span>
-<span class="skill-item" data-skill="plsql"><i class="fas fa-code"></i> PL/SQL</span>
-<span class="skill-item" data-skill="firebase"><i class="fas fa-fire"></i> Firebase</span>
-
-<!-- Tools & Platforms -->
-<span class="skill-item" data-skill="git"><i class="fab fa-git-alt"></i> Git</span>
-<span class="skill-item" data-skill="vscode"><i class="fas fa-code"></i> VS Code</span>
-
-<!-- Design/UI -->
-<span class="skill-item" data-skill="figma"><i class="fas fa-pen-nib"></i> Figma</span>
-<span class="skill-item" data-skill="canva"><i class="fas fa-palette"></i> Canva</span>
-
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            <div class="project-content">
+              <span class="project-category">Personal Portfolio</span>
+              <h3 class="project-title">Personal Portfolio</h3>
+              <div class="project-links">
+                <a href="https://sugandhatiwari01.github.io/Portfolio/" target="_blank" class="project-link">
+                  <span>Live Demo</span>
+                  <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                  </svg>
+                </a>
+                <a href="https://github.com/sugandhatiwari01/Portfolio" target="_blank" class="project-link">
+                  <span>GitHub</span>
+                  <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                  </svg>
+                </a>
+              </div>
             </div>
-            <audio id="click-sound" src="./component/click.mp3"></audio>
-        </section>
-
-
-        <!-- Work Section -->
-        <section id="work">
-            <div class="constellation-background"></div>
-            <h2>My Work</h2>
-            <div class="work-grid">
-                <div class="work-item">
-                    <div class="work-card">
-                        <video class="work-img" muted loop playsinline>
-                            <source src="./component/porfolio1.mp4" type="video/mp4">
-                            Your browser does not support the video tag.
-                        </video>
-                        <div class="work-details hidden">
-                            <div class="details-content">
-                                <div class="media-container">
-                                    <video class="details-img" muted loop playsinline>
-                                        <source src="./component/porfolio1.mp4" type="video/mp4">
-                                        Your browser does not support the video tag.
-                                    </video>
-                                </div>
-                                <h3>Personal Portfolio</h3>
-                                <p>A clean, modern, and performance-focused portfolio built using HTML, CSS, and
-                                    JavaScript. Inspired by real-world company websites, it features smooth transitions,
-                                    , responsive design, and animated project cards that open into elegant
-                                    modals. Each project is presented with detailed descriptions, tech stack visuals,
-                                    and creative media previews. Designed to showcase both technical skills and a strong
-                                    sense of UI/UX aesthetics.</p>
-                                <a href="https://sugandhatiwari01.github.io/Portfolio/" class="project-link"
-                                    target="_blank">
-                                    <i class="fas fa-globe"></i> Website Link
-                                </a>
-                                <a href="https://github.com/sugandhatiwari01/Portfolio" class="project-link"
-                                    target="_blank">
-                                    <i class="fab fa-github"></i> GitHub Repo
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="work-item">
-                    <div class="work-card">
-                        <video class="work-img" muted loop playsinline>
-                            <source src="./component/convo.mp4" type="video/mp4">
-                            Your browser does not support the video tag.
-                        </video>
-                        <div class="work-details hidden">
-                            <div class="details-content">
-                                <div class="media-container">
-                                    <video class="details-img" muted loop playsinline>
-                                        <source src="./component/convo.mp4" type="video/mp4">
-                                        Your browser does not support the video tag.
-                                    </video>
-                                </div>
-                                <h3>Convo</h3>
-                                <p>Convo is a MERN stack chat application featuring real-time messaging with Socket.IO
-                                    and Google OAuth login. The React frontend offers a responsive, pinkish-brown UI
-                                    with theme toggling and a searchable sidebar. The Node.js/Express backend with
-                                    MongoDB manages user profiles, messages, and profile picture uploads. Deployed on
-                                    Vercel and Render, I debugged challenges like CORS and profile picture retrieval to
-                                    ensure seamless functionality.</p>
-
-                                <a href="https://convo-frontend.vercel.app/" class="project-link">
-                                    <i class="fas fa-globe"></i> Website Link
-                                </a>
-                                <a href="https://github.com/sugandhatiwari01/convo-frontend" class="project-link"
-                                    target="_blank">
-                                    <i class="fab fa-github"></i> GitHub Repo <br>
-                                </a>
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="work-item">
-                    <div class="work-card">
-                        <video class="work-img" muted loop playsinline>
-                            <source src="./component/jazzify.mp4" type="video/mp4">
-                            Your browser does not support the video tag.
-                        </video>
-                        <div class="work-details hidden">
-                            <div class="details-content">
-                                <div class="media-container">
-                                    <video class="details-img" muted loop playsinline>
-                                        <source src="./component/jazzify.mp4" type="video/mp4">
-                                        Your browser does not support the video tag.
-                                    </video>
-                                </div>
-                                <h3>Jazzify</h3>
-                                <p>Jazzify is a modern music streaming platform built with PHP, HTML, CSS, JavaScript,
-                                    and Tailwind CSS. It features Google SSO authentication, email verification, Spotify
-                                    API integration for music search, and a library of 50+ downloadable songs with a
-                                    music player. Designed for a smooth and engaging user experience.</p>
-                                <a href="https://github.com/sugandhatiwari01/Jazzify" class="project-link"
-                                    target="_blank">
-                                    <i class="fab fa-github"></i> GitHub Repo
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-        </section>
-
-        <div class="section-transition">
-            <svg viewBox="0 0 1440 320">
-                <path fill="#0d1b2a" fill-opacity="1"
-                    d="M0,224L60,197.3C120,171,240,117,360,101.3C480,85,600,107,720,138.7C840,171,960,213,1080,224C1200,235,1320,213,1380,202.7L1440,192L1440,320L1380,320C1320,320,1200,320,1080,320C960,320,840,320,720,320C600,320,480,320,360,320C240,320,120,320,60,320L0,320Z">
-                </path>
-            </svg>
+          </div>
         </div>
 
-        <!-- Connect Section -->
-        <section id="connect">
-            <div class="constellation-background"></div>
-            <h2>Contact Me</h2>
-            <div class="social-links">
-                <a href="https://github.com/sugandhatiwari01" target="_blank" aria-label="GitHub Profile"><i
-                        class="fa-brands fa-github"></i></a>
-                <a href="https://www.instagram.com/_sugandhatiwari_/" target="_blank" aria-label="Instagram Profile"><i
-                        class="fa-brands fa-instagram"></i></a>
-                <a href="https://www.linkedin.com/in/sugandha-tiwari1/" target="_blank" aria-label="LinkedIn Profile"><i
-                        class="fa-brands fa-linkedin"></i></a>
-                <a href="mailto:sugandhatiwari41@gmail.com" aria-label="Email Sugandha Tiwari"><i
-                        class="fa-solid fa-envelope"></i></a>
+        <!-- Project 2 - Convo -->
+        <div class="project-card align-right glass-card" data-project>
+          <div class="project-glow"></div>
+          <div class="project-inner">
+            <div class="project-video-container">
+              <video class="project-video" autoplay muted loop playsinline>
+                <source src="./component/convo.mp4" type="video/mp4">
+              </video>
+              <div class="project-overlay"></div>
             </div>
-        </section>
-    </div>
+            <div class="project-content">
+              <span class="project-category">MERN Stack</span>
+              <h3 class="project-title">Convo</h3>
+              <div class="project-links">
+                <a href="https://convo-frontend.vercel.app/" target="_blank" class="project-link">
+                  <span>Live Demo</span>
+                  <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                  </svg>
+                </a>
+                <a href="https://github.com/sugandhatiwari01/convo-frontend" target="_blank" class="project-link">
+                  <span>GitHub</span>
+                  <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                  </svg>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
 
-    <script src="./script.js"></script>
+        <!-- Project 3 - Jazzify -->
+        <div class="project-card align-left glass-card" data-project>
+          <div class="project-glow"></div>
+          <div class="project-inner">
+            <div class="project-video-container">
+              <video class="project-video" autoplay muted loop playsinline>
+                <source src="./component/jazzify.mp4" type="video/mp4">
+              </video>
+              <div class="project-overlay"></div>
+            </div>
+            <div class="project-content">
+              <span class="project-category">Music Streaming</span>
+              <h3 class="project-title">Jazzify</h3>
+              <div class="project-links">
+                <a href="https://github.com/sugandhatiwari01/Jazzify" target="_blank" class="project-link">
+                  <span>GitHub</span>
+                  <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                  </svg>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- About Section -->
+  <section class="about section-padding" id="about">
+    <div class="about-bg"></div>
+    
+    <div class="max-container about-grid">
+      <div>
+        <span class="section-label">About</span>
+        <div class="about-text" id="about-text">
+          <!-- Words will be inserted by JS -->
+        </div>
+      </div>
+      
+      <div class="skills-section" id="skills-section">
+        <h3 class="skills-title">Technical Skills</h3>
+        <div class="skills-grid">
+          <div class="skill-item glass-card"><i class="fab fa-html5 skill-icon" aria-hidden="true"></i><span>HTML</span></div>
+          <div class="skill-item glass-card"><i class="fab fa-css3-alt skill-icon" aria-hidden="true"></i><span>CSS</span></div>
+          <div class="skill-item glass-card"><i class="fab fa-js skill-icon" aria-hidden="true"></i><span>JavaScript</span></div>
+          <div class="skill-item glass-card"><i class="fas fa-code skill-icon" aria-hidden="true"></i><span>TypeScript</span></div>
+          <div class="skill-item glass-card"><i class="fab fa-react skill-icon" aria-hidden="true"></i><span>React</span></div>
+          <div class="skill-item glass-card"><i class="fas fa-forward skill-icon" aria-hidden="true"></i><span>Next.js</span></div>
+          <div class="skill-item glass-card"><i class="fab fa-node-js skill-icon" aria-hidden="true"></i><span>Node.js</span></div>
+          <div class="skill-item glass-card"><i class="fas fa-server skill-icon" aria-hidden="true"></i><span>Express.js</span></div>
+          <div class="skill-item glass-card"><i class="fas fa-database skill-icon" aria-hidden="true"></i><span>MongoDB</span></div>
+          <div class="skill-item glass-card"><i class="fas fa-database skill-icon" aria-hidden="true"></i><span>SQL</span></div>
+          <div class="skill-item glass-card"><i class="fab fa-python skill-icon" aria-hidden="true"></i><span>Python</span></div>
+          <div class="skill-item glass-card"><i class="fab fa-java skill-icon" aria-hidden="true"></i><span>Java</span></div>
+          <div class="skill-item glass-card"><i class="fas fa-code-branch skill-icon" aria-hidden="true"></i><span>C++</span></div>
+          <div class="skill-item glass-card"><i class="fab fa-git-alt skill-icon" aria-hidden="true"></i><span>Git</span></div>
+          <div class="skill-item glass-card"><i class="fab fa-figma skill-icon" aria-hidden="true"></i><span>Figma</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Experience Section -->
+  <section class="experience section-padding" id="experience">
+    <div class="max-container">
+      <div class="section-header">
+        <span class="section-label">Experience</span>
+        <h2 class="section-title">Where I've <span class="accent-gradient">Worked</span></h2>
+      </div>
+
+      <div class="timeline">
+        <div class="timeline-item glass-card" tabindex="0">
+          <div class="timeline-dot" aria-hidden="true"></div>
+          <div class="timeline-content">
+            <div class="timeline-head">
+              <h3>Full Stack Intern — Centennial Infotech</h3>
+              <time class="text-muted">Jun 2025 — Aug 2025</time>
+            </div>
+            <p>Worked across frontend and backend to build features, optimize performance, and deliver polished UI components for internal and customer-facing projects.</p>
+            <div class="timeline-meta">React • Node.js • MongoDB • CI/CD</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+   <section class="contact section-padding" id="contact">
+  <div class="contact-bg"></div>
+  
+  <div class="contact-content" id="contact-content">
+    <span class="section-label">Get in Touch</span>
+    
+    <h2 class="section-title" style="margin-top: 1.5rem; text-align: center;">
+      Let's Build<br>
+      <span class="accent-gradient">Together</span>
+    </h2>
+    
+    <p class="contact-description" style="text-align: center;">
+      Open to new opportunities, collaborations, and exciting projects.<br>
+      Feel free to reach out — I'd love to hear from you!
+    </p>
+    
+    <!-- Smaller Button with Glow -->
+    <a href="mailto:sugandhatiwari41@gmail.com" class="contact-btn">
+      Start a Conversation
+      <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
+      </svg>
+    </a>
+    
+    <!-- Social Links (centered) -->
+    <div class="social-links">
+      <a href="https://github.com/sugandhatiwari01" target="_blank">
+        <i class="fab fa-github"></i> GitHub
+      </a>
+      <a href="https://www.instagram.com/_sugandhatiwari_/" target="_blank">
+        <i class="fab fa-instagram"></i> Instagram
+      </a>
+      <a href="https://www.linkedin.com/in/sugandha-tiwari1/" target="_blank">
+        <i class="fab fa-linkedin"></i> LinkedIn
+      </a>
+      <a href="mailto:sugandhatiwari41@gmail.com">
+        <i class="fas fa-envelope"></i> Email
+      </a>
+    </div>
+  </div>
+</section>
+
+  <!-- Footer -->
+  <footer class="footer section-padding">
+    <div class="footer-inner max-container">
+      <p>© 2025 Sugandha Tiwari. All rights reserved.</p>
+      <p>Crafted with passion & precision</p>
+    </div>
+  </footer>
+
+  <script>
+    // ========================================
+    // REGISTER GSAP PLUGINS
+    // ========================================
+    gsap.registerPlugin(ScrollTrigger);
+
+    // ========================================
+    // LENIS SMOOTH SCROLL
+    // ========================================
+    const lenis = new Lenis({
+      duration: 1.2,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      orientation: 'vertical',
+      gestureOrientation: 'vertical',
+      smoothWheel: true,
+    });
+
+    lenis.on('scroll', ScrollTrigger.update);
+
+    gsap.ticker.add((time) => {
+      lenis.raf(time * 1000);
+    });
+
+    gsap.ticker.lagSmoothing(0);
+
+    // ========================================
+    // NAVIGATION SCROLL EFFECT
+    // ========================================
+    const nav = document.getElementById('nav');
+    
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 100) {
+        nav.classList.add('scrolled');
+      } else {
+        nav.classList.remove('scrolled');
+      }
+    });
+
+    // Nav entrance animation
+    gsap.fromTo(nav, 
+      { y: -100, opacity: 0 },
+      { y: 0, opacity: 1, duration: 1, ease: 'power3.out', delay: 1.5 }
+    );
+
+    // ========================================
+    // HERO SECTION ANIMATIONS
+    // ========================================
+const heroTitleLines = ['Sugandha', 'Tiwari'];    const heroTitleEl = document.getElementById('hero-title');
+    const heroSubtitle = document.getElementById('hero-subtitle');
+    const heroProfile = document.querySelector('.hero-profile');
+    const scrollIndicator = document.getElementById('scroll-indicator');
+    const scrollLine = document.getElementById('scroll-line');
+
+    // Split title
+heroTitleLines.forEach((lineText) => {
+  const lineSpan = document.createElement('span');
+  lineSpan.className = 'line';
+  
+  lineText.split('').forEach((char) => {
+    const charSpan = document.createElement('span');
+    charSpan.className = 'char';
+    charSpan.textContent = char;
+    lineSpan.appendChild(charSpan);
+  });
+  
+  heroTitleEl.appendChild(lineSpan);
+  // Add <br> after first line
+  if (heroTitleLines.indexOf(lineText) === 0) {
+    heroTitleEl.appendChild(document.createElement('br'));
+  }
+});
+
+const chars = heroTitleEl.querySelectorAll('.char');
+
+    // Hero timeline
+    const heroTl = gsap.timeline({ delay: 0.3 });
+
+    heroTl
+      .to(heroProfile, {
+        opacity: 1,
+        scale: 1,
+        translateZ: 0,
+        duration: 1.8,
+        ease: 'power4.out'
+      })
+      .fromTo(chars, 
+        { y: 120, opacity: 0, rotateX: -90 },
+        { 
+          y: 0, 
+          opacity: 1, 
+          rotateX: 0, 
+          duration: 1.2, 
+          ease: 'power4.out', 
+          stagger: 0.03 
+        },
+        '-=1.2'
+      )
+      .fromTo(heroSubtitle,
+        { y: 40, opacity: 0 },
+        { y: 0, opacity: 1, duration: 1, ease: 'power3.out' },
+        '-=0.8'
+      )
+      .fromTo(scrollIndicator,
+        { opacity: 0, y: 20 },
+        { opacity: 1, y: 0, duration: 0.8, ease: 'power2.out' },
+        '-=0.4'
+      );
+
+    // Scroll line animation (unchanged)
+    gsap.to(scrollLine, {
+      scaleY: 1,
+      duration: 1.5,
+      ease: 'power2.inOut',
+      repeat: -1,
+      yoyo: true,
+    });
+
+    // 3D Tilt on mouse move for profile photo (same as project cards)
+    if (heroProfile) {
+      heroProfile.addEventListener('mousemove', (e) => {
+        const rect = heroProfile.getBoundingClientRect();
+        const x = (e.clientX - rect.left) / rect.width - 0.5;
+        const y = (e.clientY - rect.top) / rect.height - 0.5;
+        gsap.to(heroProfile, {
+          rotationY: x * 20,
+          rotationX: -y * 20,
+          duration: 0.8,
+          ease: 'power3.out'
+        });
+      });
+
+      heroProfile.addEventListener('mouseleave', () => {
+        gsap.to(heroProfile, {
+          rotationY: 0,
+          rotationX: 0,
+          duration: 0.8,
+          ease: 'power3.out'
+        });
+      });
+    }
+    // ========================================
+    // PROJECTS SECTION ANIMATIONS (unchanged logic)
+    // ========================================
+    const projectsHeader = document.getElementById('projects-header');
+    const projectCards = document.querySelectorAll('[data-project]');
+
+    gsap.fromTo(projectsHeader,
+      { opacity: 0, y: 60 },
+      {
+        opacity: 1,
+        y: 0,
+        duration: 1,
+        ease: 'power3.out',
+        scrollTrigger: {
+          trigger: projectsHeader,
+          start: 'top 85%',
+          end: 'top 60%',
+          scrub: 0.5,
+        },
+      }
+    );
+
+    projectCards.forEach((card, index) => {
+      const video = card.querySelector('.project-video');
+      const content = card.querySelector('.project-content');
+
+      gsap.set(card, { opacity: 0, y: 100 });
+      gsap.set(content, { opacity: 0, y: 30 });
+
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: card,
+          start: 'top 85%',
+          end: 'top 40%',
+          scrub: 0.5,
+        },
+      });
+
+      tl.to(card, {
+        opacity: 1,
+        y: 0,
+        duration: 1,
+        ease: 'power3.out',
+      })
+      .to(video, {
+        clipPath: 'inset(0 0% 0 0)',
+        duration: 1.2,
+        ease: 'power3.inOut',
+      }, '-=0.8')
+      .to(content, {
+        opacity: 1,
+        y: 0,
+        duration: 0.8,
+        ease: 'power2.out',
+      }, '-=0.5');
+
+      // Floating animation
+      ScrollTrigger.create({
+        trigger: card,
+        start: 'top 80%',
+        end: 'bottom 20%',
+        onEnter: () => {
+          gsap.to(card, {
+            y: -10,
+            duration: 3,
+            ease: 'sine.inOut',
+            repeat: -1,
+            yoyo: true,
+          });
+        },
+        onLeave: () => gsap.killTweensOf(card, 'y'),
+        onEnterBack: () => {
+          gsap.to(card, {
+            y: -10,
+            duration: 3,
+            ease: 'sine.inOut',
+            repeat: -1,
+            yoyo: true,
+          });
+        },
+        onLeaveBack: () => gsap.killTweensOf(card, 'y'),
+      });
+
+      // Parallax tilt on mouse move
+      card.addEventListener('mousemove', (e) => {
+        const rect = card.getBoundingClientRect();
+        const centerX = rect.left + rect.width / 2;
+        const centerY = rect.top + rect.height / 2;
+        const rotateX = ((e.clientY - centerY) / (rect.height / 2)) * -8;
+        const rotateY = ((e.clientX - centerX) / (rect.width / 2)) * 8;
+
+        gsap.to(card, {
+          rotateX,
+          rotateY,
+          scale: 1.02,
+          duration: 0.5,
+          ease: 'power2.out',
+          transformPerspective: 1000,
+        });
+      });
+
+      card.addEventListener('mouseleave', () => {
+        gsap.to(card, {
+          rotateX: 0,
+          rotateY: 0,
+          scale: 1,
+          duration: 0.8,
+          ease: 'power3.out',
+        });
+      });
+    });
+
+    // ========================================
+    // ABOUT SECTION ANIMATIONS
+    // ========================================
+    const aboutTextEl = document.getElementById('about-text');
+    const aboutTextContent = "I'm a Computer Science undergrad passionate about crafting clean, interactive web experiences. I specialize in full-stack development with tech stacks like HTML, CSS, JavaScript, React, Node.js, and MongoDB. Beyond coding, I enjoy movies, books, and designing on Figma.";
+
+    aboutTextContent.split(' ').forEach((word) => {
+      const span = document.createElement('span');
+      span.className = 'word';
+      span.textContent = word + ' ';
+      aboutTextEl.appendChild(span);
+    });
+
+    const aboutWords = aboutTextEl.querySelectorAll('.word');
+
+    gsap.fromTo(aboutWords,
+      { opacity: 0.15 },
+      {
+        opacity: 1,
+        duration: 0.5,
+        stagger: 0.1,
+        ease: 'power2.out',
+        scrollTrigger: {
+          trigger: aboutTextEl,
+          start: 'top 75%',
+          end: 'bottom 50%',
+          scrub: 1,
+        },
+      }
+    );
+
+    // Animate skills (replaces the old stats grid)
+    const skillsGrid = document.getElementById('skills-section');
+    if (skillsGrid) {
+      const skillItems = skillsGrid.querySelectorAll('.skill-item');
+      gsap.fromTo(skillItems,
+        { opacity: 0, y: 30 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.8,
+          stagger: 0.08,
+          ease: 'power3.out',
+          scrollTrigger: {
+            trigger: skillsGrid,
+            start: 'top 82%'
+          },
+        }
+      );
+    }
+
+    // ========================================
+    // CONTACT SECTION ANIMATIONS
+    // ========================================
+    const contactContent = document.getElementById('contact-content');
+    const contactChildren = contactContent.children;
+
+    gsap.fromTo(contactChildren,
+      { opacity: 0, y: 60 },
+      {
+        opacity: 1,
+        y: 0,
+        duration: 1,
+        stagger: 0.2,
+        ease: 'power3.out',
+        scrollTrigger: {
+          trigger: contactContent,
+          start: 'top 70%',
+        },
+      }
+    );
+
+    // EXPERIENCE: expand/collapse timeline items (keyboard + click)
+    const timelineItems = document.querySelectorAll('.timeline-item');
+    timelineItems.forEach(item => {
+      item.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const expanded = item.classList.toggle('expanded');
+        if (expanded) item.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      });
+      item.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          item.classList.toggle('expanded');
+        }
+      });
+    });
+  </script>
+
 </body>
-
 </html>
